@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block body_content %}
+    <h1>Book Review Project Website</h1>
+
+    {% for book in books %}
+        <div>
+            <h3>{{ book.b_Title }}</h3>
+            <p><b>Author: </b> {{ book.b_Author_id }}</p>
+            <p><b>Publisher: </b> {{ book.b_Publisher }}</p>
+            <p>{{ book.b_Synopsis }}</p>
+        </div>
+    {% endfor %}
+
+{% endblock %}

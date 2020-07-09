@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% block body_content %}
+    <h1>Login Page</h1>
+{#    <p>Need an account? Sign up</p>#}
+    <div class='form'>
+        <form method='POST' action=''>
+            {{ form.hidden_tag() }}
+            <div class='form_group'>
+                {{ form.u_email.label }}
+                {{ form.u_email }}
+                {% if form.u_email.errors %}
+                    <div class='error'>
+                        {% for error in form.u_email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <br>
+            <div class='form_group'>
+                {{ form.u_password.label }}
+                {{ form.u_password }}
+                {% if form.u_password.errors %}
+                    <div class='error'>
+                        {% for error in form.u_password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <br>
+            <div class="form_group">
+                {{ form.remember.label }}
+                {{ form.remember }}
+            </div>
+            <br>
+            <p><a href="{{ url_for('register') }}">No Account - CLICK here to create one</a></p>
+            <br>
+            <br>
+            <br>
+            <div class='form_group'>
+                {{ form.submit }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

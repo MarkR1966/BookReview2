@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block body_content %}
+<h1>{{ current_user.first_name }} {{ current_user.last_name }} Account Page</h1>
+    <p>Update your details here!</p>
+    <div class='form'>
+        <form method='POST' action=''>
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.u_name.label }}
+                {{ form.u_name }}
+                {% if form.u_name.errors %}
+                <div class="error">
+                    {% for error in form.u_name.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <br>
+            <div class='form_group'>
+                {{ form.u_email.label }}
+                {{ form.u_email }}
+                {% if form.u_email.errors %}
+                    <div class='error'>
+                        {% for error in form.u_email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <br>
+            <div>
+                {{ form.submit }}
+            </div>
+        </form>
+        <form action="{{ url_for('account_delete') }}">
+            <button type="submit">Delete your account</button>
+        </form>
+    </div>
+
+{% endblock %}
+        
