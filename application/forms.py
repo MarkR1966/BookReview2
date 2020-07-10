@@ -73,14 +73,17 @@ class RegistrationForm(FlaskForm):
 
         if user:
             raise ValidationError('Email already in use')
-
-    def validate_user(self, u_name):
-        user = Users.query.filter_by(u_name=u_name.data).first()
-
-        if user:
-            raise ValidationError('Username already in use')
+        else:
+            raise ValidationError('Email already in use')
 
 
+    # def validate_user(self, u_name):
+    #     user = Users.query.filter_by(u_name=u_name.data).first()
+    #
+    #     if user:
+    #         raise ValidationError('Username already in use')
+    #
+    #
 class LoginForm(FlaskForm):
     u_email = StringField('Email',
         validators=[
@@ -114,15 +117,3 @@ class UpdateAccountForm(FlaskForm):
         ]
     )
     submit = SubmitField('Update')
-
-    def validate_email(self, u_email):
-        if u_email.data != current_user.email:
-            user = Users.query.filter_by(u_email=u_email.data).first()
-            if user:
-                raise ValidationError('Email already in use')
-
-    def validate_user(self, u_name):
-        if u_name.data != current_user.name:
-            user = Users.query.filter_by(u_name=u_name.data).first()
-            if user:
-                raise ValidationError('Username already in use')

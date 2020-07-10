@@ -6,7 +6,7 @@ from application import db, login_manager
 class Authors(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     a_Author = db.Column(db.String(30), nullable=False)
-    books = db.relationship('Books', backref='b_author_id', lazy=True)
+    books = db.relationship('Books', backref='a_author_id', lazy=True)
 
     def __repr__(self):
         return ''.join(
