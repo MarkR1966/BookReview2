@@ -6,7 +6,7 @@
     {% for book in books %}
         <div>
             <h3>{{ book.b_Title }}</h3>
-            <p><b>Author: </b> {{ book.b_Author_id }}</p>
+            <p><b>Author: </b> {{ book.books.a_Author }}</p>
             <p><b>Publisher: </b> {{ book.b_Publisher }}</p>
             <p>{{ book.b_Synopsis }}</p>
         </div>

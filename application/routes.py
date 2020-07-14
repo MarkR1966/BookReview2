@@ -2,9 +2,16 @@ from wtforms import ValidationError
 
 from application import app, db, bcrypt
 from flask import render_template, redirect, url_for, request
-from application.forms import BooksForm, RegistrationForm, LoginForm, UpdateAccountForm
-from application.models import Books, Users
+from application.forms import BooksForm, RegistrationForm, LoginForm, UpdateAccountForm, AuthorForm
+from application.models import Books, Users, Authors
 from flask_login import login_user, current_user, logout_user, login_required
+
+
+def_b_Title = ""
+def_b_Author = ""
+def_b_Publisher = ""
+def_b_Synopsis = ""
+def_b_Author_id = 0
 
 
 def validate_email(email, page):
@@ -24,6 +31,16 @@ def validate_user(user):
             return False
         else:
             return True
+
+
+def validate_author(b_author):
+    global def_b_Authors_id
+    author = Authors.query.filter_by(a_Author=b_author).first()
+    def_b_Author_id = Authors.id
+    if author:
+        return True
+    else:
+        return False
 
 
 @app.route('/')
@@ -91,19 +108,49 @@ def login():
 @app.route('/add', methods=['GET', 'POST'])
 @login_required
 def add():
+    global def_b_Title, def_b_Author, def_b_Publisher, def_b_Synopsis
     form = BooksForm()
     if form.validate_on_submit():
-        book_data = Books(
-            b_Title=form.b_Title.data,
-            b_Author_id=form.b_Author_id.data,
-            b_Publisher=form.b_Publisher.data,
-            b_Synopsis=form.b_Synopsis.data
+        def_b_Title = form.b_Title.data
+        def_b_Author = form.b_Author.data
+        def_b_Publisher = form.b_Publisher.data
+        def_b_Synopsis = form.b_Synopsis.data
+        if validate_author(form.b_Author.data):
+            book_data = Books(
+                b_Title=form.b_Title.data,
+                b_Author_id=def_b_Author_id,
+                b_Publisher=form.b_Publisher.data,
+                b_Synopsis=form.b_Synopsis.data
+            )
+            db.session.add(book_data)
+            db.session.commit()
+            return redirect(url_for('home'))
+        else:
+            return redirect(url_for('addauthor'))
+    elif request.method == 'GET':
+        form.b_Title.data = def_b_Title
+        form.b_Author.data = def_b_Author
+        form.b_Publisher.data = def_b_Publisher
+        form.b_Synopsis.data = def_b_Synopsis
+    return render_template('addbook.html', title='Add a Book', form=form)
+
+
+@app.route('/addauthor', methods=['GET', 'POST'])
+@login_required
+def addauthor():
+    global def_b_Author
+    form = AuthorForm()
+    if form.validate_on_submit():
+        def_b_Author = form.a_Author.data
+        author_data = Authors(
+            a_Author=form.a_Author.data,
         )
-        db.session.add(book_data)
+        db.session.add(author_data)
         db.session.commit()
-        return redirect(url_for('home'))
-    else:
-        return render_template('post.html', Title='Add a post', form=form)
+        return redirect(url_for('add'))
+    elif request.method == 'GET':
+            form.a_Author.data = def_b_Author
+    return render_template('addauthor.html', title='Add an Author', form=form)
 
 
 @app.route("/logout")

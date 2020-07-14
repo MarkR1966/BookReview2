@@ -38,6 +38,25 @@ class BooksForm(FlaskForm):
 
     submit = SubmitField('Add Book Details')
 
+    # def validate_author(self, b_Author):
+    #     author = Authors.query.filter_by(AUthor=b_Author.data).first()
+    #
+    #     if author:
+    #         raise ValidationError('Author does not exist')
+
+
+class AuthorForm(FlaskForm):
+    a_Author = StringField(
+        'Author',
+        validators=[
+            DataRequired(),
+            Length(min=1, max=30)
+        ]
+    )
+
+    submit = SubmitField('Add Author Details')
+
+
 class RegistrationForm(FlaskForm):
     u_name = StringField(
         'User Name',
@@ -73,8 +92,7 @@ class RegistrationForm(FlaskForm):
 
         if user:
             raise ValidationError('Email already in use')
-        else:
-            raise ValidationError('Email already in use')
+
 
 
     # def validate_user(self, u_name):

@@ -6,7 +6,6 @@ from application import db, login_manager
 class Authors(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     a_Author = db.Column(db.String(30), nullable=False)
-    books = db.relationship('Books', backref='a_author_id', lazy=True)
 
     def __repr__(self):
         return ''.join(
@@ -23,6 +22,7 @@ class Books(db.Model):
     b_Publisher = db.Column(db.String(30), nullable=False)
     b_Synopsis = db.Column(db.String(300), nullable=True)
     b_Author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)
+    books = db.relationship('Authors', backref=db.backref('a_author_id', lazy=True))
 
     def __repr__(self):
         return ''.join(

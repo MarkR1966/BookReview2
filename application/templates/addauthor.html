@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block body_content %}
+    <h1>Book Review Project Website</h1>
+    <h1>Add a Book</h1>
+    <div class='form'>
+        <form method='POST' action=''>
+            {{ form.hidden_tag() }}
+            <div class='form_group'>
+                {{ form.a_Author.label }}
+                {{ form.a_Author }}
+                {% if form.a_Author.errors %}
+                    <div class='error'>
+                        {% for error in form.b_Author.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class='form_group'>
+                {{ form.submit }}
+            </div>
+        </form>
+    </div>
+{% endblock %}
