@@ -10,7 +10,7 @@ class Authors(db.Model):
     def __repr__(self):
         return ''.join(
             [
-                'Author ID: ' + str(self.id) + '\n'
+                'AuthorID: ' + str(self.id) + '\n'
                 'Author: ' + self.a_Author + '\n'
             ]
         )

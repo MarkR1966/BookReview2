@@ -11,5 +11,8 @@
             <p>{{ book.b_Synopsis }}</p>
         </div>
     {% endfor %}
+        {% if books.has_prev %}<a href="{{ url_for('home', page=books.prev_num) }}">&lt;&lt; Previous books</a>{% else %}&lt;&lt; Previous books{% endif %} |
+{% if books.has_next %}<a href="{{ url_for('home', page=books.next_num) }}">Next books &gt;&gt;</a>{% else %}Next books &gt;&gt;{% endif %}
+
 
 {% endblock %}

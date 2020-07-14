@@ -34,20 +34,22 @@ def validate_user(user):
 
 
 def validate_author(b_author):
-    global def_b_Authors_id
+    global def_b_Author_id
     author = Authors.query.filter_by(a_Author=b_author).first()
-    def_b_Author_id = Authors.id
+    def_b_Author_id = author.id         #query.filter_by(a_Author=b_author).first()
     if author:
         return True
     else:
         return False
 
 
-@app.route('/')
+@app.route('/', methods=['GET'], defaults={"page": 1})
+@app.route('/myview/<int:page>',methods=['GET'])
 @app.route('/home')
 @login_required
-def home():
-    book_data = Books.query.all()
+def home(page=1):
+    per_page = 3
+    book_data = Books.query.order_by(Books.b_Title).paginate(page,per_page,error_out=False)
     return render_template('home.html', title='Homepage', books=book_data)
 
 
@@ -118,7 +120,7 @@ def add():
         if validate_author(form.b_Author.data):
             book_data = Books(
                 b_Title=form.b_Title.data,
-                b_Author_id=def_b_Author_id,
+                b_Author_id=str(def_b_Author_id),
                 b_Publisher=form.b_Publisher.data,
                 b_Synopsis=form.b_Synopsis.data
             )
@@ -187,3 +189,4 @@ def account_delete():
         db.session.delete(account)
         db.session.commit()
         return redirect(url_for('register'))
+
