@@ -226,3 +226,12 @@ def updatebook(page=1):
     return render_template('updatebook.html', title='Update a Book', form=form)
 
 
+@app.route("/deletebook", methods=["GET", "POST"])
+@login_required
+def deletebook():
+        user = current_user.id
+        account = Users.query.filter_by(id=user).first()
+        logout_user()
+        db.session.delete(account)
+        db.session.commit()
+        return redirect(url_for('register'))

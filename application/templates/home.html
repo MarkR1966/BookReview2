@@ -1,18 +1,34 @@
 {% extends "layout.html" %}
 
 {% block body_content %}
-    <h1>Book Review Project Website</h1>
-
-    {% for book in books.items %}
-        <div>
-            <h3>{{ book.b_Title }}</h3>
-            <p><b>Author: </b> {{ book.books.a_Author }}</p>
-            <p><b>Publisher: </b> {{ book.b_Publisher }}</p>
-            <p>{{ book.b_Synopsis }}</p>
-        </div>
-    {% endfor %}
-    {% if books.has_prev %}<a href="{{ url_for('home', page=books.prev_num) }}">&lt;&lt; Previous</a>{% else %}&lt;&lt; Previous books{% endif %} |
-    {% if books.has_next %}<a href="{{ url_for('home', page=books.next_num) }}">Next &gt;&gt;</a>{% else %}Next books &gt;&gt;{% endif %}
-
-
+    <div>
+        <table class="table">
+            <tr>
+                <th>Title</th>&nbsp;
+                <th>Author</th>&nbsp;
+                <th>Publisher</th>&nbsp;
+                <th>Synopsis</th>&nbsp;
+            </tr>
+            {% for book in books.items %}
+                <tr class="tabletext">
+                    <td><p><b>{{ book.b_Title }}</b></p></td>
+                    <td><p>{{ book.books.a_Author }}</p></td>
+                    <td><p>{{ book.b_Publisher }}</p></td>
+                    <td><p>{{ book.b_Synopsis }}</p></td>
+                    <td>
+                        <form action="{{ url_for('updatebook', bookid=book.id) }}">
+                            <button type=""submit">Update</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{{ url_for('deletebook', bookid=book.id) }}">
+                            <button onclick="return confirm('Are you sure you want to Delete Book?');" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% if books.has_prev %}<a href="{{ url_for('home', page=books.prev_num) }}">&lt;&lt; Previous</a>{% else %}&lt;&lt; Previous{% endif %} |
+        {% if books.has_next %}<a href="{{ url_for('home', page=books.next_num) }}">Next &gt;&gt;</a>{% else %}Next &gt;&gt;{% endif %}
+    </div>
 {% endblock %}
