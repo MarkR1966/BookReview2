@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block body_content %}
+    <h1>Book Review Project Website</h1>
+    <div class='form'>
+        <form method='POST' action=''>
+            {{ form.hidden_tag() }}
+            <div class='form_group'>
+                {{ form.b_Title.label }}
+                {{ form.b_Title }}
+                {% if form.b_Title.errors %}
+                    <div class='error'>
+                        {% for error in form.b_Title.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <br>
+            <div class='form_group'>
+                {{ form.b_Author.label }}
+                {{ form.b_Author }}
+                {% if form.b_Author.errors %}
+                    <div class='error'>
+                        {% for error in form.b_Author.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <br>
+            <div class='form_group'>
+                {{ form.b_Publisher.label }}]
+                {{ form.b_Publisher }}
+                {% if form.b_Publisher.errors %}
+                    <div class='error'>
+                        {% for error in form.b_Publisher.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <br>
+            <div class='form_group'>
+                {{ form.b_Synopsis.label }}
+                {{ form.b_Synopsis }}
+                {% if form.b_Synopsis.errors %}
+                    <div class='error'>
+                        {% for error in form.b_Synopsis.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <br>
+#            {% if books.has_prev %}<a href="{{ url_for('home', page=books.prev_num) }}">&lt;&lt; Previous books</a>{% else %}&lt;&lt; Previous books{% endif %} |}
+#            {% if books.has_next %}<a href="{{ url_for('home', page=books.next_num) }}">Next books &gt;&gt;</a>{% else %}Next books &gt;&gt;{% endif %}}
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class='form_group'>
+                {{ form.submit }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -3,7 +3,7 @@
 {% block body_content %}
     <h1>Book Review Project Website</h1>
 
-    {% for book in books %}
+    {% for book in books.items %}
         <div>
             <h3>{{ book.b_Title }}</h3>
             <p><b>Author: </b> {{ book.books.a_Author }}</p>
@@ -11,8 +11,8 @@
             <p>{{ book.b_Synopsis }}</p>
         </div>
     {% endfor %}
-        {% if books.has_prev %}<a href="{{ url_for('home', page=books.prev_num) }}">&lt;&lt; Previous books</a>{% else %}&lt;&lt; Previous books{% endif %} |
-{% if books.has_next %}<a href="{{ url_for('home', page=books.next_num) }}">Next books &gt;&gt;</a>{% else %}Next books &gt;&gt;{% endif %}
+    {% if books.has_prev %}<a href="{{ url_for('home', page=books.prev_num) }}">&lt;&lt; Previous</a>{% else %}&lt;&lt; Previous books{% endif %} |
+    {% if books.has_next %}<a href="{{ url_for('home', page=books.next_num) }}">Next &gt;&gt;</a>{% else %}Next books &gt;&gt;{% endif %}
 
 
 {% endblock %}

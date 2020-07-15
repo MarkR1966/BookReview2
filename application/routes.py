@@ -2,7 +2,7 @@ from wtforms import ValidationError
 
 from application import app, db, bcrypt
 from flask import render_template, redirect, url_for, request
-from application.forms import BooksForm, RegistrationForm, LoginForm, UpdateAccountForm, AuthorForm
+from application.forms import BooksForm, RegistrationForm, LoginForm, UpdateAccountForm, AuthorForm, UpdateBooksForm
 from application.models import Books, Users, Authors
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -44,7 +44,7 @@ def validate_author(b_author):
 
 
 @app.route('/', methods=['GET'], defaults={"page": 1})
-@app.route('/myview/<int:page>',methods=['GET'])
+@app.route('/<int:page>',methods=['GET'])
 @app.route('/home')
 @login_required
 def home(page=1):
@@ -173,6 +173,11 @@ def account():
         else:
             current_user.u_name = form.u_name.data
             current_user.u_email = form.u_email.data
+            user_data = Users(
+                u_name=form.u_name.data,
+                u_email=form.u_email.data
+            )
+            db.session.update(user_data)
             db.session.commit()
             return redirect(url_for('account'))
     elif request.method == 'GET':
@@ -189,4 +194,35 @@ def account_delete():
         db.session.delete(account)
         db.session.commit()
         return redirect(url_for('register'))
+
+
+@app.route('/updatebook', methods=['GET', 'POST'])
+@login_required
+def updatebook(page=1):
+    global def_b_Title, def_b_Author, def_b_Publisher, def_b_Synopsis
+    form = UpdateBooksForm()
+    if form.validate_on_submit():
+        def_b_Title = form.b_Title.data
+        def_b_Author = form.b_Author.data
+        def_b_Publisher = form.b_Publisher.data
+        def_b_Synopsis = form.b_Synopsis.data
+        book_data = Books(
+            b_Title=def_b_Title,
+            b_Publisher=def_b_Publisher,
+            b_Synopsis=def_b_Synopsis
+        )
+        author_data = Authors(
+            a_Author=def_b_Author
+        )
+        db.session.update(author_data)
+        db.session.update(book_data)
+        db.session.commit()
+        return redirect(url_for('updatebook'))
+    elif request.method == 'GET':
+        form.b_Title.data = def_b_Title
+        form.b_Author.data = def_b_Author
+        form.b_Publisher.data = def_b_Publisher
+        form.b_Synopsis.data = def_b_Synopsis
+    return render_template('updatebook.html', title='Update a Book', form=form)
+
 

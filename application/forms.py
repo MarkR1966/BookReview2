@@ -135,3 +135,39 @@ class UpdateAccountForm(FlaskForm):
         ]
     )
     submit = SubmitField('Update')
+
+
+class UpdateBooksForm(FlaskForm):
+    b_Title = StringField(
+        'Book Title',
+        validators=[
+            DataRequired(),
+            Length(min=1, max=30)
+        ]
+    )
+
+    b_Author = StringField(
+        'Author',
+        validators=[
+            DataRequired(),
+            Length(min=1, max=30)
+        ]
+    )
+
+    b_Publisher = StringField(
+        'Publisher',
+        validators=[
+            DataRequired(),
+            Length(min=1, max=30)
+        ]
+    )
+
+    b_Synopsis = StringField(
+        'Synopsis',
+        validators=[
+            Length(min=0, max=300)
+        ]
+    )
+
+    submit = SubmitField('Update Book Details')
+
