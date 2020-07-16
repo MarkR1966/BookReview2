@@ -2,7 +2,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from application.models import Users
-from flask_login import current_user
 
 class BooksForm(FlaskForm):
     b_Title = StringField(
@@ -37,13 +36,6 @@ class BooksForm(FlaskForm):
     )
 
     submit = SubmitField('Add Book Details')
-
-    # def validate_author(self, b_Author):
-    #     author = Authors.query.filter_by(AUthor=b_Author.data).first()
-    #
-    #     if author:
-    #         raise ValidationError('Author does not exist')
-
 
 class AuthorForm(FlaskForm):
     a_Author = StringField(
@@ -95,13 +87,6 @@ class RegistrationForm(FlaskForm):
 
 
 
-    # def validate_user(self, u_name):
-    #     user = Users.query.filter_by(u_name=u_name.data).first()
-    #
-    #     if user:
-    #         raise ValidationError('Username already in use')
-    #
-    #
 class LoginForm(FlaskForm):
     u_email = StringField('Email',
         validators=[
@@ -170,4 +155,3 @@ class UpdateBooksForm(FlaskForm):
     )
 
     submit = SubmitField('Update Book Details')
-

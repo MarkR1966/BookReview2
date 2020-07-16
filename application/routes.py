@@ -196,10 +196,12 @@ def account_delete():
         return redirect(url_for('register'))
 
 
-@app.route('/updatebook', methods=['GET', 'POST'])
+@app.route('/updatebook/<bookid>', methods=['GET', 'POST'])
 @login_required
-def updatebook(page=1):
+def updatebook(bookid):
+    book = Books.query.filter_by(id=bookid).first()
     global def_b_Title, def_b_Author, def_b_Publisher, def_b_Synopsis
+
     form = UpdateBooksForm()
     if form.validate_on_submit():
         def_b_Title = form.b_Title.data
@@ -217,21 +219,19 @@ def updatebook(page=1):
         db.session.update(author_data)
         db.session.update(book_data)
         db.session.commit()
-        return redirect(url_for('updatebook'))
-    elif request.method == 'GET':
-        form.b_Title.data = def_b_Title
-        form.b_Author.data = def_b_Author
-        form.b_Publisher.data = def_b_Publisher
-        form.b_Synopsis.data = def_b_Synopsis
+        return redirect(url_for('home'))
+    # elif request.method == 'GET':
+    #     form.b_Title.data = def_b_Title
+    #     form.b_Author.data = def_b_Author
+    #     form.b_Publisher.data = def_b_Publisher
+    #     form.b_Synopsis.data = def_b_Synopsis
     return render_template('updatebook.html', title='Update a Book', form=form)
 
 
-@app.route("/deletebook", methods=["GET", "POST"])
+@app.route("/deletebook/<bookid>", methods=["GET", "POST"])
 @login_required
-def deletebook():
-        user = current_user.id
-        account = Users.query.filter_by(id=user).first()
-        logout_user()
-        db.session.delete(account)
+def deletebook(bookid):
+        book = Books.query.filter_by(id=bookid).first()
+        db.session.delete(book)
         db.session.commit()
-        return redirect(url_for('register'))
+        return redirect(url_for('home'))

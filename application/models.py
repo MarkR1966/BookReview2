@@ -5,7 +5,7 @@ from application import db, login_manager
 
 class Authors(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    a_Author = db.Column(db.String(30), nullable=False)
+    a_Author = db.Column(db.String(30), nullable=False, unique=True)
 
     def __repr__(self):
         return ''.join(
