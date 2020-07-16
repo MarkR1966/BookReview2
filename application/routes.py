@@ -36,8 +36,8 @@ def validate_user(user):
 def validate_author(b_author):
     global def_b_Author_id
     author = Authors.query.filter_by(a_Author=b_author).first()
-    def_b_Author_id = author.id         #query.filter_by(a_Author=b_author).first()
     if author:
+        def_b_Author_id = author.id  # query.filter_by(a_Author=b_author).first()
         return True
     else:
         return False
@@ -173,11 +173,9 @@ def account():
         else:
             current_user.u_name = form.u_name.data
             current_user.u_email = form.u_email.data
-            user_data = Users(
-                u_name=form.u_name.data,
-                u_email=form.u_email.data
-            )
-            db.session.update(user_data)
+            user = Users.query.filter_by(uname=form.u_name.data).first()
+            user.u_name = form.u_name.data
+            user.u_email = form.u_email.data
             db.session.commit()
             return redirect(url_for('account'))
     elif request.method == 'GET':
@@ -199,32 +197,22 @@ def account_delete():
 @app.route('/updatebook/<bookid>', methods=['GET', 'POST'])
 @login_required
 def updatebook(bookid):
-    book = Books.query.filter_by(id=bookid).first()
-    global def_b_Title, def_b_Author, def_b_Publisher, def_b_Synopsis
-
     form = UpdateBooksForm()
     if form.validate_on_submit():
-        def_b_Title = form.b_Title.data
-        def_b_Author = form.b_Author.data
-        def_b_Publisher = form.b_Publisher.data
-        def_b_Synopsis = form.b_Synopsis.data
-        book_data = Books(
-            b_Title=def_b_Title,
-            b_Publisher=def_b_Publisher,
-            b_Synopsis=def_b_Synopsis
-        )
-        author_data = Authors(
-            a_Author=def_b_Author
-        )
-        db.session.update(author_data)
-        db.session.update(book_data)
+        book = Books.query.filter_by(id=bookid).first()
+        author = Authors.query.filter_by(id=book.b_Author_id).first()
+        book.b_Title = form.b_Title.data
+        book.b_Publisher = form.b_Publisher.data
+        book.b_Synopsis = form.b_Synopsis.data
+        author.a_Author = form.b_Author.data
         db.session.commit()
         return redirect(url_for('home'))
-    # elif request.method == 'GET':
-    #     form.b_Title.data = def_b_Title
-    #     form.b_Author.data = def_b_Author
-    #     form.b_Publisher.data = def_b_Publisher
-    #     form.b_Synopsis.data = def_b_Synopsis
+    elif request.method == 'GET':
+        book = Books.query.filter_by(id=bookid).first()
+        form.b_Title.data = book.b_Title
+        form.b_Author.data = book.books.a_Author
+        form.b_Publisher.data = book.b_Publisher
+        form.b_Synopsis.data = book.b_Synopsis
     return render_template('updatebook.html', title='Update a Book', form=form)
 
 
