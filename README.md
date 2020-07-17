@@ -109,7 +109,10 @@ The front end design is very simple and purely operational
 </p>
 
 #### Risk Assessment
-
+</p>
+   <img src="https://i.imgur.com/wtKtjxB.png">
+</p>">
+</p>
 #### Difficulties
 * Using the project management software for the first time
 (time to learn how to use)
