@@ -90,6 +90,23 @@ GCP VM for deployment to end users
 
 #### Design
 The front end design is very simple and purely operational
+<p align="center">
+    <img src="https://i.imgur.com/cls2R7q.png">
+</p>
+<p align="center">
+    <img src="https://i.imgur.com/rvAs6GF.png">
+</p>
+<p align="center">
+   <img src="https://i.imgur.com/hXhD6gk.png">
+</p>
+<p align="center">
+    <img src="https://i.imgur.com/ORrMswW.png">
+</p>
+<p align="center">
+    <img src="https://i.imgur.com/y8m7Z7P.png">
+</p>
+   <img src="https://i.imgur.com/TAXWG9g.png">
+</p>
 
 #### Risk Assessment
 
