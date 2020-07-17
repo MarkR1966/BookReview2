@@ -52,6 +52,14 @@ The user stories that satisfied the brief were
 * As a user I want to be able to delete a book from the list - Delete
 
 #### Data
+<p align="center">
+    <img src="https://i.imgur.com/efqk8NA.png">
+</p>
+
+This diagram specifies the one to many relationship
+between Authors and the Books they have written.
+Where a book must always have an author linked by Author_ID 
+
 
 #### Technologies
 * Trello for project management
@@ -64,6 +72,9 @@ The user stories that satisfied the brief were
 * Systemd to run the application as a service
 
 #### CI Pipeline
+<p align="center">
+    <img src="https://i.imgur.com/X9uqvFX.png">
+</p>
 
 CI Pipeline flow goes as as follows
 * Source code is created - this is where the application is developed locally
@@ -92,7 +103,7 @@ The front end design is very simple and purely operational
 * limited functionality
 #### Future Improvements
 * Adding review scores and read status for each use
-* displaying average review score against tile based on all users scores
+* displaying average review score against Book title based on all users scores
 
 
 
