@@ -1,14 +1,47 @@
+import g
+from flask_login import current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from application.models import Users
+from application.models import Books, Users
 
-class BooksForm(FlaskForm):
+
+def validate_book(self, b_Title):                       # Checks Title does not exist in Books table
+    if b_Title.data != g.def_b_Title:                   # is this the current title when updating
+        book = Books.query.filter_by(b_Title=b_Title.data).first()
+        if book:
+            raise ValidationError('Title already in use')
+
+
+def validate_email(self, u_email):                      # Checks Email address does not exist in the Users table
+    check = True
+    if current_user.is_authenticated:                   # is Current user logged in
+        if u_email.data == current_user.email:          # is this the Current User email when updating
+            check = False
+    if check:
+        user = Users.query.filter_by(u_email=u_email.data).first()
+        if user:
+            raise ValidationError('Email already in use')
+
+
+def validate_user(self, u_name):                        # Checks Username does not exist in the Users table
+    check = True
+    if current_user.is_authenticated:                   # is Current user logged in
+        if u_name.data == current_user.u_name:          # is this the Current Username
+            check = False
+    if check:
+        user = Users.query.filter_by(u_name=u_name.data).first()
+        if user:
+            raise ValidationError('Username already in use')
+
+
+class BooksForm(FlaskForm):                             # define Class that will be used for Books Form data
     b_Title = StringField(
         'Book Title',
         validators=[
-            DataRequired(),
-            Length(min=1, max=30)
+            DataRequired(),                             #
+            Length(min=1, max=30),
+            validate_book
         ]
     )
 
@@ -37,7 +70,8 @@ class BooksForm(FlaskForm):
 
     submit = SubmitField('Add Book Details')
 
-class AuthorForm(FlaskForm):
+
+class AuthorForm(FlaskForm):                            # define Class that will be used for Author Form data
     a_Author = StringField(
         'Author',
         validators=[
@@ -49,19 +83,21 @@ class AuthorForm(FlaskForm):
     submit = SubmitField('Add Author Details')
 
 
-class RegistrationForm(FlaskForm):
+class RegistrationForm(FlaskForm):                      # define Class that will be used for Registration Form data
     u_name = StringField(
         'User Name',
         validators=[
             DataRequired(),
-            Length(min=6, max=30)
+            Length(min=6, max=30),
+            validate_user
         ]
     )
     u_email = StringField(
         'Email',
         validators=[
             DataRequired(),
-            Email()
+            Email(),
+            validate_email
         ]
     )
     u_password = PasswordField(
@@ -79,15 +115,8 @@ class RegistrationForm(FlaskForm):
     )
     submit = SubmitField('Sign Up')
 
-    def validate_email(self, u_email):
-        user = Users.query.filter_by(u_email=u_email.data).first()
 
-        if user:
-            raise ValidationError('Email already in use')
-
-
-
-class LoginForm(FlaskForm):
+class LoginForm(FlaskForm):                             # define Class that will be used for Login Form data
     u_email = StringField('Email',
         validators=[
             DataRequired(),
@@ -105,7 +134,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
-class UpdateAccountForm(FlaskForm):
+class UpdateAccountForm(FlaskForm):                     # define Class that will be used for UpdateAccount Form data
     u_name = StringField('Username',
             validators = [
                 DataRequired(),
@@ -116,18 +145,20 @@ class UpdateAccountForm(FlaskForm):
     u_email = StringField('Email',
         validators = [
             DataRequired(),
-            Email()
+            Email(),
+            validate_email
         ]
     )
     submit = SubmitField('Update')
 
 
-class UpdateBooksForm(FlaskForm):
+class UpdateBooksForm(FlaskForm):                       # define Class that will be used for UpdateBooks Form data
     b_Title = StringField(
         'Book Title',
         validators=[
             DataRequired(),
-            Length(min=1, max=30)
+            Length(min=1, max=30),
+            validate_book
         ]
     )
 

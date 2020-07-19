@@ -12,8 +12,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Sup3rn0va01@34.89.36.49:3306/Books'
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = ('mysql+pymysql://' + getenv('MYSQL_USER') + ':' + getenv('MYSQL_PASS') + '@' + getenv('MYSQL_URL') + '/' + getenv('MYSQL_DB'))
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.config['SECRET_KEY'] = 'YOUR_SECRET_KEY'
 db = SQLAlchemy(app)
 
 login_manager = LoginManager(app)

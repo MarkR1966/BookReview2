@@ -1,9 +1,8 @@
 from flask_login import UserMixin
-
 from application import db, login_manager
 
 
-class Authors(db.Model):
+class Authors(db.Model):                        # Define Class Authors to hold authors table data
     id = db.Column(db.Integer, primary_key=True)
     a_Author = db.Column(db.String(30), nullable=False, unique=True)
 
@@ -16,7 +15,7 @@ class Authors(db.Model):
         )
 
 
-class Books(db.Model):
+class Books(db.Model):                          # Define Class Books to hold books table data with join to authors
     id = db.Column(db.Integer, primary_key=True)
     b_Title = db.Column(db.String(30), nullable=False, unique=True)
     b_Publisher = db.Column(db.String(30), nullable=False)
@@ -35,7 +34,7 @@ class Books(db.Model):
         )
 
 
-class Users(db.Model, UserMixin):
+class Users(db.Model, UserMixin):               # Define Class Users to hold users table data
     id = db.Column(db.Integer, primary_key=True)
     u_name = db.Column(db.String(30), nullable=False, unique=True)
     u_email = db.Column(db.String(500), nullable=False, unique=True)
