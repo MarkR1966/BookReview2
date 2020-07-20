@@ -105,15 +105,15 @@ The front end design is very simple and purely operational
 </p>
 <p align="center">
     <img src="https://i.imgur.com/y8m7Z7P.png">
-</p>
+<p>
    <img src="https://i.imgur.com/TAXWG9g.png">
 </p>
 
 #### Risk Assessment
-</p>
+<p>
    <img src="https://i.imgur.com/wtKtjxB.png">
 </p>">
-</p>
+
 #### Difficulties
 * Using the project management software for the first time
 (time to learn how to use)
@@ -123,10 +123,5 @@ The front end design is very simple and purely operational
 * No searching functionality
 * limited functionality
 #### Future Improvements
-* Adding review scores and read status for each use
+* Adding review scores and read status for each user
 * displaying average review score against Book title based on all users scores
-
-
-
-
-
