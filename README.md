@@ -87,6 +87,7 @@ to the repository on Github
 GCP VM for deployment to end users
 
 #### Testing
+* Manual testing to ensure that data validation is correctupdated readme for testing
 
 #### Design
 The front end design is very simple and purely operational
