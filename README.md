@@ -73,7 +73,7 @@ Where a book must always have an author linked by Author_ID
 
 #### CI Pipeline
 <p align="center">
-    <img src="https://i.imgur.com/X9uqvFX.png">
+    <img src="https://imgur.com/tu9XdEG">
 </p>
 
 CI Pipeline flow goes as as follows
